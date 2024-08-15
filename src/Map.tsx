@@ -9,8 +9,8 @@ const containerStyle = {
 };
 
 const center = {
-  lat: -34.397,
-  lng: 150.644,
+  lat: -33.50972,
+  lng: -70.76167, // Coordenadas de Plaza de Maipú
 };
 
 const Map: React.FC = () => {
