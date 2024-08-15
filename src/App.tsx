@@ -5,7 +5,7 @@ import './App.css';
 const App: React.FC = () => {
   return (
     <div className="App">
-      <h1>Map-React-GoogleApi-test-Juan</h1>
+      <h1>Map-React-GoogleApi-test-Bastimaquina</h1>
       <nav>
         <ul>
           <li><Link to="/">Ref</Link></li>
