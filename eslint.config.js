@@ -1,26 +1,46 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
+import globals from "globals";
+import pluginJs from "@eslint/js";
+import tseslint from "typescript-eslint";
+import pluginReact from "eslint-plugin-react";
 
-export default tseslint.config({
-  extends: [js.configs.recommended, ...tseslint.configs.recommended],
-  files: ['**/*.{ts,tsx}'],
-  ignores: ['dist'],
-  languageOptions: {
-    ecmaVersion: 2020,
-    globals: globals.browser,
+export default [
+  {
+    files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
+    languageOptions: {
+      globals: globals.browser,
+      parser: "@typescript-eslint/parser",
+      parserOptions: {
+        ecmaVersion: 2021,
+        sourceType: "module",
+        ecmaFeatures: {
+          jsx: true,
+          project: './tsconfig.app.json', // Configura el project solo para archivos TS
+        },
+      },
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+    rules: {
+      "react/react-in-jsx-scope": "off",
+    },
   },
-  plugins: {
-    'react-hooks': reactHooks,
-    'react-refresh': reactRefresh,
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
+  {
+    files: ["eslint.config.js"], // Aplica a eslint.config.js específicamente
+    languageOptions: {
+      // Sin parser para este archivo, ya que no es TypeScript
+      parserOptions: {
+        project: null, // Evita la configuración del proyecto
+      },
+    },
+    rules: {
+      "no-undef": "off",
+      "no-unused-vars": "off",
+    },
   },
-  rules: {
-    ...reactHooks.configs.recommended.rules,
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-  },
-})
+];
